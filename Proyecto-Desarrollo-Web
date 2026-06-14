@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desarrollo Web</title>
+
+```
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        margin:0;
+        background-color:#f4f4f4;
+        color:#333;
+    }
+
+    header{
+        background-color:#0d6efd;
+        color:white;
+        text-align:center;
+        padding:20px;
+    }
+
+    nav{
+        background-color:#084298;
+        padding:10px;
+    }
+
+    nav ul{
+        list-style:none;
+        display:flex;
+        justify-content:center;
+        margin:0;
+        padding:0;
+    }
+
+    nav ul li{
+        margin:0 15px;
+    }
+
+    nav ul li a{
+        color:white;
+        text-decoration:none;
+        font-weight:bold;
+    }
+
+    nav ul li a:hover{
+        text-decoration:underline;
+    }
+
+    main{
+        width:80%;
+        margin:auto;
+        background-color:white;
+        padding:20px;
+    }
+
+    section{
+        margin-bottom:30px;
+    }
+
+    img{
+        max-width:100%;
+        border-radius:10px;
+        display:block;
+        margin:auto;
+    }
+
+    aside{
+        background-color:#e9ecef;
+        padding:15px;
+        border-left:5px solid #0d6efd;
+    }
+
+    footer{
+        background-color:#0d6efd;
+        color:white;
+        text-align:center;
+        padding:15px;
+    }
+
+    iframe{
+        display:block;
+        margin:auto;
+        max-width:100%;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h1>Desarrollo Web</h1>
+    <p>Proyecto académico para aprender el desarrollo de aplicaciones web utilizando HTML, CSS y herramientas modernas.</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#quienes">Quiénes Somos</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+    </ul>
+</nav>
+
+<main>
+
+```
+<section id="inicio">
+    <h2>Inicio</h2>
+
+    <article>
+        <p>
+            Bienvenido al proyecto Desarrollo Web. Este sitio tiene como finalidad
+            presentar información relacionada con el aprendizaje de tecnologías
+            web, herramientas de programación y buenas prácticas utilizadas en el
+            desarrollo de aplicaciones modernas para Internet.
+        </p>
+    </article>
+</section>
+
+<section id="quienes">
+    <h2>Quiénes Somos</h2>
+
+    <p>
+        Desarrollo Web es un proyecto académico orientado al aprendizaje y la
+        práctica de tecnologías utilizadas en la creación de sitios y aplicaciones
+        web. El objetivo principal es adquirir conocimientos sobre HTML5, CSS,
+        JavaScript y otras herramientas modernas que permiten diseñar interfaces
+        atractivas y funcionales. A través de este proyecto se busca comprender la
+        estructura de una página web, la organización del contenido mediante
+        etiquetas semánticas y la importancia de una correcta experiencia de
+        usuario. Además, se promueve el uso de metodologías de desarrollo que
+        faciliten la creación de soluciones digitales eficientes. Este proyecto
+        representa una oportunidad para fortalecer habilidades técnicas,
+        creatividad y capacidad de resolución de problemas en el ámbito del
+        desarrollo web, preparándose para futuros proyectos profesionales y
+        académicos relacionados con la tecnología y la innovación.
+    </p>
+
+    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+         alt="Desarrollo Web">
+</section>
+
+<section id="servicios">
+    <h2>Servicios</h2>
+
+    <ul>
+        <li>Diseño de páginas web.</li>
+        <li>Desarrollo de aplicaciones web.</li>
+        <li>Aprendizaje de HTML5 y CSS3.</li>
+        <li>Implementación de interfaces responsivas.</li>
+        <li>Uso de herramientas modernas de programación.</li>
+    </ul>
+</section>
+
+<section id="contacto">
+    <h2>Contacto</h2>
+
+    <p><strong>Correo:</strong> jostin.medina@email.com</p>
+    <p><strong>Teléfono:</strong> +593 99 999 9999</p>
+    <p><strong>Dirección:</strong> La Troncal, Cañar, Ecuador</p>
+
+    <h3>Redes Sociales</h3>
+
+    <a href="https://www.facebook.com" target="_blank">Facebook</a><br>
+    <a href="https://www.instagram.com" target="_blank">Instagram</a><br>
+    <a href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+</section>
+
+<section>
+    <h2>Video Relacionado</h2>
+
+    <iframe width="560"
+            height="315"
+            src="https://www.youtube.com/embed/UB1O30fR-EE"
+            title="Introducción a HTML"
+            frameborder="0"
+            allowfullscreen>
+    </iframe>
+</section>
+
+<aside>
+    <h3>Información Complementaria</h3>
+
+    <p>
+        Horario de estudio del proyecto: lunes a viernes de 18:00 a 21:00.
+    </p>
+
+    <p>
+        Objetivo actual: aprender la estructura semántica de HTML5 y crear
+        páginas web organizadas y accesibles.
+    </p>
+</aside>
+```
+
+</main>
+
+<footer>
+    <p>
+        Jostin Medina | Desarrollo de Aplicaciones Web | 2026
+    </p>
+</footer>
+
+</body>
+</html>
