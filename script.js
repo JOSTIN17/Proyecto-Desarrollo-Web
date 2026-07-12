@@ -12,7 +12,49 @@ const errorDescripcion = document.getElementById("errorDescripcion");
 const errorCategoria = document.getElementById("errorCategoria");
 
 let total = 0;
+let servicios = [];
 
+function mostrarServicios(){
+
+    lista.innerHTML = "";
+
+    servicios.forEach(function(servicio){
+
+        const tarjeta = document.createElement("div");
+
+        tarjeta.className = "card shadow p-3 mt-3";
+
+        tarjeta.innerHTML = `
+            <h5>${servicio.nombre}</h5>
+            <p>${servicio.descripcion}</p>
+            <span class="badge bg-primary">${servicio.categoria}</span>
+
+            <br><br>
+
+            <button class="btn btn-danger eliminar">
+                Eliminar
+            </button>
+        `;
+
+        lista.appendChild(tarjeta);
+
+        tarjeta.querySelector(".eliminar").addEventListener("click", function(){
+
+            const posicion = servicios.indexOf(servicio);
+
+            servicios.splice(posicion, 1);
+
+            total--;
+
+            contador.textContent = total;
+
+            mostrarServicios();
+
+        });
+
+    });
+
+}
 function validarNombre() {
 
     if (nombre.value.trim().length < 3) {
@@ -96,24 +138,15 @@ formulario.addEventListener("submit", function(event){
         Registro agregado correctamente.
     </div>
     `;
+const servicio = {
+    nombre: nombre.value,
+    descripcion: descripcion.value,
+    categoria: categoria.value
+};
 
-    const tarjeta = document.createElement("div");
+servicios.push(servicio);
 
-    tarjeta.className = "card shadow p-3 mt-3";
-
-    tarjeta.innerHTML = `
-        <h5>${nombre.value}</h5>
-        <p>${descripcion.value}</p>
-        <span class="badge bg-primary">${categoria.value}</span>
-
-        <br><br>
-
-        <button class="btn btn-danger eliminar">
-            Eliminar
-        </button>
-    `;
-
-    lista.appendChild(tarjeta);
+    mostrarServicios();
 
     total++;
     contador.textContent = total;
@@ -123,15 +156,5 @@ formulario.addEventListener("submit", function(event){
     nombre.classList.remove("is-valid");
     descripcion.classList.remove("is-valid");
     categoria.classList.remove("is-valid");
-
-    tarjeta.querySelector(".eliminar").addEventListener("click", function(){
-
-        tarjeta.remove();
-
-        total--;
-
-        contador.textContent = total;
-
-    });
 
 });
