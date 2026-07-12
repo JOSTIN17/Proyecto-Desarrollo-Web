@@ -167,3 +167,4 @@ servicios.push(servicio);
     categoria.classList.remove("is-valid");
 
 });
+mostrarServicios();
