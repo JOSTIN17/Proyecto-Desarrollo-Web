@@ -17,7 +17,16 @@ let servicios = [];
 function mostrarServicios(){
 
     lista.innerHTML = "";
+if(servicios.length === 0){
 
+    lista.innerHTML = `
+        <div class="alert alert-warning">
+            No existen servicios registrados actualmente.
+        </div>
+    `;
+
+    return;
+}
     servicios.forEach(function(servicio){
 
         const tarjeta = document.createElement("div");
