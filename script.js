@@ -2,7 +2,7 @@ const formulario = document.getElementById("formRegistro");
 const lista = document.getElementById("listaRegistros");
 const mensaje = document.getElementById("mensaje");
 const contador = document.getElementById("contador");
-
+const spinner = document.getElementById("spinnerCarga");
 const nombre = document.getElementById("nombre");
 const descripcion = document.getElementById("descripcion");
 const categoria = document.getElementById("categoria");
@@ -142,6 +142,8 @@ formulario.addEventListener("submit", function(event){
         return;
     }
 
+    spinner.style.display = "block";
+    
     mensaje.innerHTML = `
     <div class="alert alert-success">
         Registro agregado correctamente.
@@ -166,5 +168,6 @@ servicios.push(servicio);
     descripcion.classList.remove("is-valid");
     categoria.classList.remove("is-valid");
 
+    spinner.style.display = "none";
 });
 mostrarServicios();
