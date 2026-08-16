@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}
+Inicio - Desarrollo Web
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container text-center text-white">
+        <h1>Desarrollo Web</h1>
+        <p class="lead">
+            Proyecto académico para aprender HTML5, CSS3, Bootstrap y tecnologías web modernas.
+        </p>
+
+        <a href="#servicios" class="btn btn-warning btn-lg">
+            Ver Servicios
+        </a>
+    </div>
+</section>
+
+<main class="container my-5">
+
+    <section id="inicio" class="mb-5">
+        <h2 class="text-center mb-4">Inicio</h2>
+
+        <article>
+            <p class="text-center">
+                Bienvenido al proyecto Desarrollo Web. Este sitio tiene como finalidad
+                presentar información relacionada con el aprendizaje de tecnologías
+                web, herramientas de programación y buenas prácticas utilizadas en el
+                desarrollo de aplicaciones modernas para Internet.
+            </p>
+        </article>
+    </section>
+
+    <section id="quienes" class="mb-5">
+
+        <h2 class="text-center mb-4">Quiénes Somos</h2>
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+                     class="img-fluid rounded shadow"
+                     alt="Desarrollo Web">
+            </div>
+
+            <div class="col-md-6">
+                <p>
+                    Desarrollo Web es un proyecto académico orientado al aprendizaje y la
+                    práctica de tecnologías utilizadas en la creación de sitios y aplicaciones
+                    web. El objetivo principal es adquirir conocimientos sobre HTML5, CSS,
+                    JavaScript y otras herramientas modernas que permiten diseñar interfaces
+                    atractivas y funcionales.
+                </p>
+
+                <p>
+                    Además, se promueve el uso de metodologías de desarrollo que faciliten
+                    la creación de soluciones digitales eficientes para futuros proyectos
+                    académicos y profesionales.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="servicios" class="mb-5">
+
+        <h2 class="text-center mb-4">Servicios</h2>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card shadow m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Diseño Web</h5>
+                        <p class="card-text">
+                            Creación de páginas web modernas y atractivas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Desarrollo Web</h5>
+                        <p class="card-text">
+                            Implementación de aplicaciones web dinámicas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Diseño Responsivo</h5>
+                        <p class="card-text">
+                            Adaptación para computadoras, tablets y celulares.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}
