@@ -32,44 +32,51 @@ Facturación - Desarrollo Web
 
             <tbody>
 
-                <tr>
-                    <td>FAC-001</td>
-                    <td>Ana López</td>
-                    <td>Diseño Web</td>
-                    <td>10/08/2026</td>
-                    <td>$150.00</td>
-                    <td>
-                        <span class="badge bg-success">
-                            Pagada
-                        </span>
-                    </td>
-                </tr>
+                {% for factura in facturas %}
 
                 <tr>
-                    <td>FAC-002</td>
-                    <td>Carlos Pérez</td>
-                    <td>Desarrollo Web</td>
-                    <td>12/08/2026</td>
-                    <td>$300.00</td>
+
                     <td>
-                        <span class="badge bg-warning text-dark">
-                            Pendiente
-                        </span>
+                        {{ factura.numero }}
                     </td>
+
+                    <td>
+                        {{ factura.cliente }}
+                    </td>
+
+                    <td>
+                        {{ factura.servicio }}
+                    </td>
+
+                    <td>
+                        {{ factura.fecha }}
+                    </td>
+
+                    <td>
+                        ${{ "%.2f"|format(factura.total) }}
+                    </td>
+
+                    <td>
+
+                        {% if factura.estado == "Pagada" %}
+
+                            <span class="badge bg-success">
+                                {{ factura.estado }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+                                {{ factura.estado }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
                 </tr>
 
-                <tr>
-                    <td>FAC-003</td>
-                    <td>María González</td>
-                    <td>Diseño Responsivo</td>
-                    <td>14/08/2026</td>
-                    <td>$200.00</td>
-                    <td>
-                        <span class="badge bg-success">
-                            Pagada
-                        </span>
-                    </td>
-                </tr>
+                {% endfor %}
 
             </tbody>
 
@@ -78,9 +85,12 @@ Facturación - Desarrollo Web
     </div>
 
     <div class="alert alert-info mt-4">
+
         <strong>Información:</strong>
+
         Los datos presentados son demostrativos y no están conectados
         a una base de datos en esta etapa del proyecto.
+
     </div>
 
 </div>
