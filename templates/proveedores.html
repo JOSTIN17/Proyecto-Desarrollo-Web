@@ -17,101 +17,54 @@ Proveedores - Desarrollo Web
 
     <div class="row">
 
-        <div class="col-md-6 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Proveedor 001</h5>
-
-                    <p class="card-text">
-                        <strong>Empresa:</strong> Tecnología Digital S.A.
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Servicio:</strong> Equipos tecnológicos
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Contacto:</strong> contacto@tecnologiadigital.com
-                    </p>
-
-                    <span class="badge bg-success">
-                        Activo
-                    </span>
-                </div>
-            </div>
-        </div>
+        {% for proveedor in proveedores %}
 
         <div class="col-md-6 mb-4">
+
             <div class="card shadow h-100">
+
                 <div class="card-body">
-                    <h5 class="card-title">Proveedor 002</h5>
+
+                    <h5 class="card-title">
+                        Proveedor {{ proveedor.id }}
+                    </h5>
 
                     <p class="card-text">
-                        <strong>Empresa:</strong> Servicios Web Ecuador
+                        <strong>Empresa:</strong>
+                        {{ proveedor.empresa }}
                     </p>
 
                     <p class="card-text">
-                        <strong>Servicio:</strong> Servicios de hosting
+                        <strong>Servicio:</strong>
+                        {{ proveedor.servicio }}
                     </p>
 
                     <p class="card-text">
-                        <strong>Contacto:</strong> info@serviciosweb.com
+                        <strong>Contacto:</strong>
+                        {{ proveedor.contacto }}
                     </p>
 
-                    <span class="badge bg-success">
-                        Activo
-                    </span>
+                    {% if proveedor.estado == "Activo" %}
+
+                        <span class="badge bg-success">
+                            {{ proveedor.estado }}
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-secondary">
+                            {{ proveedor.estado }}
+                        </span>
+
+                    {% endif %}
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-6 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Proveedor 003</h5>
-
-                    <p class="card-text">
-                        <strong>Empresa:</strong> Diseño Creativo
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Servicio:</strong> Recursos gráficos
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Contacto:</strong> contacto@disenocreativo.com
-                    </p>
-
-                    <span class="badge bg-secondary">
-                        Inactivo
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Proveedor 004</h5>
-
-                    <p class="card-text">
-                        <strong>Empresa:</strong> Soluciones Informáticas
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Servicio:</strong> Soporte tecnológico
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Contacto:</strong> soporte@soluciones.com
-                    </p>
-
-                    <span class="badge bg-success">
-                        Activo
-                    </span>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
 
     </div>
 
