@@ -17,50 +17,56 @@ Productos - Desarrollo Web
 
     <div class="row">
 
-        <div class="col-md-4 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Diseño Web</h5>
-                    <p class="card-text">
-                        Servicio orientado a la creación de páginas web
-                        modernas y atractivas.
-                    </p>
-                    <span class="badge bg-primary">
-                        Disponible
-                    </span>
-                </div>
-            </div>
-        </div>
+        {% for producto in productos %}
 
         <div class="col-md-4 mb-4">
+
             <div class="card shadow h-100">
+
                 <div class="card-body">
-                    <h5 class="card-title">Desarrollo Web</h5>
+
+                    <h5 class="card-title">
+                        {{ producto.nombre }}
+                    </h5>
+
                     <p class="card-text">
-                        Desarrollo de aplicaciones web utilizando
-                        tecnologías modernas.
+                        {{ producto.descripcion }}
                     </p>
-                    <span class="badge bg-success">
-                        Disponible
-                    </span>
+
+                    <p class="card-text">
+                        <strong>Precio:</strong>
+                        ${{ "%.2f"|format(producto.precio) }}
+                    </p>
+
+                    {% if producto.stock > 0 %}
+
+                        <span class="badge bg-success">
+                            Disponible
+                        </span>
+
+                        <p class="mt-2 mb-0">
+                            Stock disponible: {{ producto.stock }}
+                        </p>
+
+                    {% else %}
+
+                        <span class="badge bg-danger">
+                            Agotado
+                        </span>
+
+                        <p class="mt-2 mb-0">
+                            No hay unidades disponibles.
+                        </p>
+
+                    {% endif %}
+
                 </div>
+
             </div>
+
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Diseño Responsivo</h5>
-                    <p class="card-text">
-                        Adaptación de sitios web para computadoras,
-                        tablets y dispositivos móviles.
-                    </p>
-                    <span class="badge bg-warning text-dark">
-                        Disponible
-                    </span>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
 
     </div>
 
