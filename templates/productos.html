@@ -9,71 +9,116 @@ Productos - Desarrollo Web
 <div class="container my-5">
 
     <div class="text-center mb-5">
-    <h1>Productos</h1>
 
-    <p class="lead">
-        Módulo de productos del proyecto Desarrollo Web.
-    </p>
+        <h1>Productos</h1>
 
-    <a href="{{ url_for('nuevo_producto') }}"
-       class="btn btn-primary mt-3">
-        <i class="bi bi-plus-circle"></i>
-        Nuevo producto
-    </a>
-</div>
-    
-    <div class="row">
+        <p class="lead">
+            Módulo de productos del proyecto Desarrollo Web.
+        </p>
 
-        {% for producto in productos %}
+        <a href="{{ url_for('nuevo_producto') }}"
+           class="btn btn-primary mt-3">
+            <i class="bi bi-plus-circle"></i>
+            Nuevo producto
+        </a>
 
-        <div class="col-md-4 mb-4">
+    </div>
 
-            <div class="card shadow h-100">
+    {% if mensaje %}
+    <div class="alert alert-success text-center" role="alert">
+        {{ mensaje }}
+    </div>
+    {% endif %}
 
-                <div class="card-body">
+    <div class="table-responsive">
 
-                    <h5 class="card-title">
-                        {{ producto.nombre }}
-                    </h5>
+        <table class="table table-bordered table-hover align-middle shadow">
 
-                    <p class="card-text">
-                        {{ producto.descripcion }}
-                    </p>
+            <thead class="table-primary">
 
-                    <p class="card-text">
-                        <strong>Precio:</strong>
-                        ${{ "%.2f"|format(producto.precio) }}
-                    </p>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Estado</th>
+                </tr>
 
-                    {% if producto.stock > 0 %}
+            </thead>
 
-                        <span class="badge bg-success">
-                            Disponible
-                        </span>
+            <tbody>
 
-                        <p class="mt-2 mb-0">
-                            Stock disponible: {{ producto.stock }}
-                        </p>
+                {% for producto in productos %}
 
-                    {% else %}
+                <tr>
 
-                        <span class="badge bg-danger">
-                            Agotado
-                        </span>
+                    <td>
+                        {{ producto["id"] }}
+                    </td>
 
-                        <p class="mt-2 mb-0">
-                            No hay unidades disponibles.
-                        </p>
+                    <td>
+                        <strong>
+                            {{ producto["nombre"] }}
+                        </strong>
+                    </td>
 
-                    {% endif %}
+                    <td>
+                        {{ producto["descripcion"] }}
+                    </td>
 
-                </div>
+                    <td>
+                        {{ producto["categoria"] }}
+                    </td>
 
-            </div>
+                    <td>
+                        ${{ "%.2f"|format(producto["precio"]) }}
+                    </td>
 
-        </div>
+                    <td>
+                        {{ producto["stock"] }}
+                    </td>
 
-        {% endfor %}
+                    <td>
+
+                        {% if producto["stock"] > 0 %}
+
+                            <span class="badge bg-success">
+                                Disponible
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                Agotado
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="7" class="text-center py-4">
+
+                        <div class="alert alert-info mb-0">
+                            No existen productos registrados actualmente.
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
 
     </div>
 
