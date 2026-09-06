@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import sqlite3
 from forms.producto_form import ProductoForm
 from forms.cliente_form import ClienteForm
 from forms.proveedor_form import ProveedorForm
@@ -8,7 +9,36 @@ app = Flask(__name__)
 
 # Configuración de Flask-WTF y protección CSRF
 app.config["SECRET_KEY"] = "clave-secreta-proyecto-2026"
+# ==================================================
+# CONFIGURACIÓN DE SQLITE
+# ==================================================
 
+DATABASE = "data/ferreteria.db"
+
+
+def conectar_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def inicializar_db():
+    conn = conectar_db()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS productos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            descripcion TEXT NOT NULL,
+            categoria TEXT NOT NULL,
+            precio REAL NOT NULL,
+            stock INTEGER NOT NULL
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+    
 # ==================================================
 # DATOS DE EJEMPLO DEL PROYECTO
 # ==================================================
@@ -143,37 +173,67 @@ def index():
 # Ruta de productos
 @app.route("/productos")
 def productos():
+    conn = conectar_db()
+
+    productos = conn.execute("""
+        SELECT id, nombre, descripcion, categoria, precio, stock
+        FROM productos
+        ORDER BY id DESC
+    """).fetchall()
+
+    conn.close()
+
     return render_template(
         "productos.html",
-        productos=productos_lista
+        productos=productos
     )
+    
 # Formulario de productos
 @app.route("/productos/nuevo", methods=["GET", "POST"])
 def nuevo_producto():
     form = ProductoForm()
 
     if form.validate_on_submit():
-        nuevo = {
-            "nombre": form.nombre.data,
-            "descripcion": form.descripcion.data,
-            "categoria": form.categoria.data,
-            "precio": 0.00,
-            "stock": 0
-       }
+        conn = conectar_db()
 
-        productos_lista.append(nuevo)
+        conn.execute("""
+            INSERT INTO productos (
+                nombre,
+                descripcion,
+                categoria,
+                precio,
+                stock
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            form.nombre.data,
+            form.descripcion.data,
+            form.categoria.data,
+            0.00,
+            0
+        ))
+
+        conn.commit()
+
+        productos = conn.execute("""
+            SELECT id, nombre, descripcion, categoria, precio, stock
+            FROM productos
+            ORDER BY id DESC
+        """).fetchall()
+
+        conn.close()
 
         return render_template(
             "productos.html",
-            productos=productos_lista,
+            productos=productos,
             mensaje="Producto registrado correctamente."
         )
 
     return render_template(
         "formulario_producto.html",
         form=form
-    ) 
-
+    )
+    
 # Ruta de clientes
 @app.route("/clientes")
 def clientes():
@@ -282,4 +342,5 @@ def nueva_factura():
 # ==================================================
 
 if __name__ == "__main__":
+    inicializar_db()
     app.run(debug=True)
