@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo Proveedor{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Registrar nuevo proveedor</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST">
+
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            {{ form.nombre.label(class="form-label") }}
+
+                            {{ form.nombre(
+                                class="form-control",
+                                placeholder="Ingrese el nombre del proveedor"
+                            ) }}
+
+                            {% for error in form.nombre.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.correo.label(class="form-label") }}
+
+                            {{ form.correo(
+                                class="form-control",
+                                placeholder="ejemplo@correo.com"
+                            ) }}
+
+                            {% for error in form.correo.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.telefono.label(class="form-label") }}
+
+                            {{ form.telefono(
+                                class="form-control",
+                                placeholder="Ingrese el número de teléfono"
+                            ) }}
+
+                            {% for error in form.telefono.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.empresa.label(class="form-label") }}
+
+                            {{ form.empresa(
+                                class="form-control",
+                                placeholder="Ingrese el nombre de la empresa"
+                            ) }}
+
+                            {% for error in form.empresa.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            {{ form.submit(
+                                class="btn btn-primary"
+                            ) }}
+
+                            <a href="{{ url_for('proveedores') }}"
+                               class="btn btn-secondary">
+                                Cancelar
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
