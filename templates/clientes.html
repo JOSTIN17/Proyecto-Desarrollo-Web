@@ -9,11 +9,18 @@ Clientes - Desarrollo Web
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h1>Clientes</h1>
-        <p class="lead">
-            Módulo de clientes del proyecto Desarrollo Web.
-        </p>
-    </div>
+    <h1>Clientes</h1>
+
+    <p class="lead">
+        Módulo de clientes del proyecto Desarrollo Web.
+    </p>
+
+    <a href="{{ url_for('nuevo_cliente') }}"
+       class="btn btn-primary mt-3">
+        <i class="bi bi-person-plus"></i>
+        Nuevo cliente
+    </a>
+</div>
 
     <div class="table-responsive">
 
