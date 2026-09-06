@@ -1,7 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from forms.producto_form import ProductoForm
+from forms.cliente_form import ClienteForm
+from forms.proveedor_form import ProveedorForm
+from forms.facturacion_form import FacturacionForm
 
 app = Flask(__name__)
 
+# Configuración de Flask-WTF y protección CSRF
+app.config["SECRET_KEY"] = "clave-secreta-proyecto-2026"
 
 # ==================================================
 # DATOS DE EJEMPLO DEL PROYECTO
