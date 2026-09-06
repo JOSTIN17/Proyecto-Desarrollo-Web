@@ -247,7 +247,34 @@ def facturacion():
         "facturacion.html",
         facturas=facturas_lista
     )
+    
+# Formulario de facturación
+@app.route("/facturacion/nueva", methods=["GET", "POST"])
+def nueva_factura():
+    form = FacturacionForm()
 
+    if form.validate_on_submit():
+        nueva = {
+            "numero": form.numero_factura.data,
+            "cliente": form.cliente.data,
+            "servicio": "Servicio general",
+            "fecha": "06/09/2026",
+            "total": form.total.data,
+            "estado": "Pendiente"
+        }
+
+        facturas_lista.append(nueva)
+
+        return render_template(
+            "facturacion.html",
+            facturas=facturas_lista,
+            mensaje="Factura registrada correctamente."
+        )
+
+    return render_template(
+        "formulario_facturacion.html",
+        form=form
+    )
 
 # ==================================================
 # EJECUCIÓN DE LA APLICACIÓN
