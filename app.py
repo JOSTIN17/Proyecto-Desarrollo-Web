@@ -154,11 +154,12 @@ def nuevo_producto():
 
     if form.validate_on_submit():
         nuevo = {
-            "nombre": form.nombre.data,
-            "descripcion": form.descripcion.data,
-            "precio": 0.00,
-            "stock": 0
-        }
+    "nombre": form.nombre.data,
+    "descripcion": form.descripcion.data,
+    "categoria": form.categoria.data,
+    "precio": 0.00,
+    "stock": 0
+}
 
         productos_lista.append(nuevo)
 
