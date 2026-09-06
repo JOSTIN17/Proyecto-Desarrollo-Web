@@ -180,7 +180,31 @@ def clientes():
         "clientes.html",
         clientes=clientes_lista
     )
+# Formulario de clientes
+@app.route("/clientes/nuevo", methods=["GET", "POST"])
+def nuevo_cliente():
+    form = ClienteForm()
 
+    if form.validate_on_submit():
+        nuevo = {
+            "id": str(len(clientes_lista) + 1).zfill(3),
+            "nombre": form.nombre.data,
+            "correo": form.correo.data,
+            "estado": "Activo"
+        }
+
+        clientes_lista.append(nuevo)
+
+        return render_template(
+            "clientes.html",
+            clientes=clientes_lista,
+            mensaje="Cliente registrado correctamente."
+        )
+
+    return render_template(
+        "formulario_cliente.html",
+        form=form
+    )
 
 # Ruta de proveedores
 @app.route("/proveedores")
