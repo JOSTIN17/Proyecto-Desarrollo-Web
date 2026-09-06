@@ -147,7 +147,31 @@ def productos():
         "productos.html",
         productos=productos_lista
     )
+# Formulario de productos
+@app.route("/productos/nuevo", methods=["GET", "POST"])
+def nuevo_producto():
+    form = ProductoForm()
 
+    if form.validate_on_submit():
+        nuevo = {
+            "nombre": form.nombre.data,
+            "descripcion": form.descripcion.data,
+            "precio": 0.00,
+            "stock": 0
+        }
+
+        productos_lista.append(nuevo)
+
+        return render_template(
+            "productos.html",
+            productos=productos_lista,
+            mensaje="Producto registrado correctamente."
+        )
+
+    return render_template(
+        "formulario_producto.html",
+        form=form
+    ) 
 
 # Ruta de clientes
 @app.route("/clientes")
