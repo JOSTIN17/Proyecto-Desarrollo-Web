@@ -213,7 +213,32 @@ def proveedores():
         "proveedores.html",
         proveedores=proveedores_lista
     )
+# Formulario de proveedores
+@app.route("/proveedores/nuevo", methods=["GET", "POST"])
+def nuevo_proveedor():
+    form = ProveedorForm()
 
+    if form.validate_on_submit():
+        nuevo = {
+            "id": str(len(proveedores_lista) + 1).zfill(3),
+            "empresa": form.empresa.data,
+            "servicio": "Servicio general",
+            "contacto": form.correo.data,
+            "estado": "Activo"
+        }
+
+        proveedores_lista.append(nuevo)
+
+        return render_template(
+            "proveedores.html",
+            proveedores=proveedores_lista,
+            mensaje="Proveedor registrado correctamente."
+        )
+
+    return render_template(
+        "formulario_proveedor.html",
+        form=form
+    )
 
 # Ruta de facturación
 @app.route("/facturacion")
