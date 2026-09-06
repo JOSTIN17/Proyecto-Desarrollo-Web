@@ -51,29 +51,6 @@ informacion_proyecto = {
     "estado": "En desarrollo"
 }
 
-
-productos_lista = [
-    {
-        "nombre": "Diseño Web",
-        "descripcion": "Creación de páginas web modernas y atractivas.",
-        "precio": 150.00,
-        "stock": 5
-    },
-    {
-        "nombre": "Desarrollo Web",
-        "descripcion": "Implementación de aplicaciones web dinámicas.",
-        "precio": 300.00,
-        "stock": 3
-    },
-    {
-        "nombre": "Diseño Responsivo",
-        "descripcion": "Adaptación de sitios web para dispositivos móviles.",
-        "precio": 200.00,
-        "stock": 0
-    }
-]
-
-
 clientes_lista = [
     {
         "id": "001",
