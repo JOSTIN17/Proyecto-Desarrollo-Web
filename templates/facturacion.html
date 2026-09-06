@@ -9,11 +9,18 @@ Facturación - Desarrollo Web
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h1>Facturación</h1>
-        <p class="lead">
-            Módulo de facturación del proyecto Desarrollo Web.
-        </p>
-    </div>
+    <h1>Facturación</h1>
+
+    <p class="lead">
+        Módulo de facturación del proyecto Desarrollo Web.
+    </p>
+
+    <a href="{{ url_for('nueva_factura') }}"
+       class="btn btn-primary mt-3">
+        <i class="bi bi-receipt"></i>
+        Nueva factura
+    </a>
+</div>
 
     <div class="table-responsive">
 
