@@ -9,12 +9,19 @@ Proveedores - Desarrollo Web
 <div class="container my-5">
 
     <div class="text-center mb-5">
-        <h1>Proveedores</h1>
-        <p class="lead">
-            Módulo de proveedores del proyecto Desarrollo Web.
-        </p>
-    </div>
+    <h1>Proveedores</h1>
 
+    <p class="lead">
+        Módulo de proveedores del proyecto Desarrollo Web.
+    </p>
+
+    <a href="{{ url_for('nuevo_proveedor') }}"
+       class="btn btn-primary mt-3">
+        <i class="bi bi-person-plus"></i>
+        Nuevo proveedor
+    </a>
+</div>
+    
     <div class="row">
 
         {% for proveedor in proveedores %}
