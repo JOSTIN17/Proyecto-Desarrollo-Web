@@ -167,8 +167,6 @@ def productos():
         "productos.html",
         productos=productos
     )
-
-
 # ==================================================
 # PRODUCTOS - AGREGAR
 # INSERT
@@ -198,9 +196,9 @@ def nuevo_producto():
             form.nombre.data,
             form.descripcion.data,
             form.categoria.data,
-            0.00,
-            0,
-            None
+            form.precio.data,
+            form.stock.data,
+             None
         ))
 
         conn.commit()
@@ -255,6 +253,8 @@ def editar_producto(id):
         form.nombre.data = producto["nombre"]
         form.descripcion.data = producto["descripcion"]
         form.categoria.data = producto["categoria"]
+        form.precio.data = producto["precio"]
+        form.stock.data = producto["stock"]
 
     if form.validate_on_submit():
 
@@ -262,16 +262,20 @@ def editar_producto(id):
         cursor = conn.cursor()
 
         cursor.execute("""
-            UPDATE productos
+             UPDATE productos
             SET
                 nombre = %s,
                 descripcion = %s,
-                categoria = %s
+                categoria = %s,
+                precio = %s,
+                stock = %s
             WHERE id_producto = %s
         """, (
             form.nombre.data,
             form.descripcion.data,
             form.categoria.data,
+            form.precio.data,
+            form.stock.data,
             id
         ))
 
@@ -288,7 +292,6 @@ def editar_producto(id):
         editar=True,
         producto=producto
     )
-
 
 # ==================================================
 # PRODUCTOS - ELIMINAR
