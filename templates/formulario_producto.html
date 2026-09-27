@@ -159,6 +159,27 @@
                         </div>
 
 
+                        <!-- PROVEEDOR -->
+
+                        <div class="mb-3">
+
+                            {{ form.proveedor.label(class="form-label") }}
+
+                            {{ form.proveedor(
+                                class="form-select"
+                            ) }}
+
+                            {% for error in form.proveedor.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
                         <!-- BOTONES -->
 
                         <div class="d-flex gap-2">
