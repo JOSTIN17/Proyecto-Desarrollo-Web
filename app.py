@@ -140,6 +140,45 @@ def index():
 
 
 # ==================================================
+# OBTENER PROVEEDORES DESDE MYSQL
+# ==================================================
+
+def obtener_proveedores():
+
+    conn = obtener_conexion()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+            id_proveedor,
+            nombre
+        FROM proveedores
+        ORDER BY nombre
+    """)
+
+    proveedores = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return proveedores
+
+
+# ==================================================
+# CONFIGURAR PROVEEDORES EN EL FORMULARIO
+# ==================================================
+
+def configurar_proveedores(form):
+
+    proveedores = obtener_proveedores()
+
+    form.proveedor.choices = [
+        (proveedor["id_proveedor"], proveedor["nombre"])
+        for proveedor in proveedores
+    ]
+
+
+# ==================================================
 # PRODUCTOS - LISTAR
 # SELECT + JOIN
 # ==================================================
@@ -187,6 +226,8 @@ def nuevo_producto():
 
     form = ProductoForm()
 
+    configurar_proveedores(form)
+
     if form.validate_on_submit():
 
         conn = obtener_conexion()
@@ -208,7 +249,7 @@ def nuevo_producto():
             form.categoria.data,
             form.precio.data,
             form.stock.data,
-            None
+            form.proveedor.data
         ))
 
         conn.commit()
@@ -258,6 +299,8 @@ def editar_producto(id):
 
     form = ProductoForm()
 
+    configurar_proveedores(form)
+
     if request.method == "GET":
 
         form.nombre.data = producto["nombre"]
@@ -265,6 +308,7 @@ def editar_producto(id):
         form.categoria.data = producto["categoria"]
         form.precio.data = producto["precio"]
         form.stock.data = producto["stock"]
+        form.proveedor.data = producto["id_proveedor"]
 
     if form.validate_on_submit():
 
@@ -278,7 +322,8 @@ def editar_producto(id):
                 descripcion = %s,
                 categoria = %s,
                 precio = %s,
-                stock = %s
+                stock = %s,
+                id_proveedor = %s
             WHERE id_producto = %s
         """, (
             form.nombre.data,
@@ -286,6 +331,7 @@ def editar_producto(id):
             form.categoria.data,
             form.precio.data,
             form.stock.data,
+            form.proveedor.data,
             id
         ))
 
