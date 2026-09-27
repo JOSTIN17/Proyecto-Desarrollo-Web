@@ -61,3 +61,42 @@ CREATE TABLE IF NOT EXISTS facturas (
         FOREIGN KEY (id_cliente)
         REFERENCES clientes(id_cliente)
 );
+
+-- ==========================================
+-- DATOS INICIALES DE PROVEEDORES
+-- ==========================================
+
+INSERT INTO proveedores (nombre, telefono, correo)
+SELECT 'Tecnología Digital S.A.', '0991111111', 'contacto@tecnologiadigital.com'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM proveedores
+    WHERE nombre = 'Tecnología Digital S.A.'
+);
+
+
+INSERT INTO proveedores (nombre, telefono, correo)
+SELECT 'Servicios Web Ecuador', '0992222222', 'info@serviciosweb.com'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM proveedores
+    WHERE nombre = 'Servicios Web Ecuador'
+);
+
+
+INSERT INTO proveedores (nombre, telefono, correo)
+SELECT 'Diseño Creativo', '0993333333', 'contacto@disenocreativo.com'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM proveedores
+    WHERE nombre = 'Diseño Creativo'
+);
+
+
+INSERT INTO proveedores (nombre, telefono, correo)
+SELECT 'Soluciones Informáticas', '0994444444', 'soporte@soluciones.com'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM proveedores
+    WHERE nombre = 'Soluciones Informáticas'
+);
