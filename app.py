@@ -1,13 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for
+
 from forms.producto_form import ProductoForm
 from forms.cliente_form import ClienteForm
 from forms.proveedor_form import ProveedorForm
 from forms.facturacion_form import FacturacionForm
+
 from conexion.conexion import obtener_conexion
+
 
 app = Flask(__name__)
 
-# Configuración de Flask-WTF y protección CSRF
+
+# ==================================================
+# CONFIGURACIÓN DE FLASK-WTF Y PROTECCIÓN CSRF
+# ==================================================
+
 app.config["SECRET_KEY"] = "clave-secreta-proyecto-2026"
 
 
@@ -124,6 +131,7 @@ facturas_lista = [
 
 @app.route("/")
 def index():
+
     return render_template(
         "index.html",
         nombre_proyecto=nombre_proyecto,
@@ -167,6 +175,8 @@ def productos():
         "productos.html",
         productos=productos
     )
+
+
 # ==================================================
 # PRODUCTOS - AGREGAR
 # INSERT
@@ -198,7 +208,7 @@ def nuevo_producto():
             form.categoria.data,
             form.precio.data,
             form.stock.data,
-             None
+            None
         ))
 
         conn.commit()
@@ -262,7 +272,7 @@ def editar_producto(id):
         cursor = conn.cursor()
 
         cursor.execute("""
-             UPDATE productos
+            UPDATE productos
             SET
                 nombre = %s,
                 descripcion = %s,
@@ -292,6 +302,7 @@ def editar_producto(id):
         editar=True,
         producto=producto
     )
+
 
 # ==================================================
 # PRODUCTOS - ELIMINAR
@@ -323,6 +334,7 @@ def eliminar_producto(id):
 
 @app.route("/clientes")
 def clientes():
+
     return render_template(
         "clientes.html",
         clientes=clientes_lista
@@ -363,6 +375,7 @@ def nuevo_cliente():
 
 @app.route("/proveedores")
 def proveedores():
+
     return render_template(
         "proveedores.html",
         proveedores=proveedores_lista
@@ -404,6 +417,7 @@ def nuevo_proveedor():
 
 @app.route("/facturacion")
 def facturacion():
+
     return render_template(
         "facturacion.html",
         facturas=facturas_lista
