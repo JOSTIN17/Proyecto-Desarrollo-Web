@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Nuevo Producto{% endblock %}
+{% block title %}
+    {% if editar %}
+        Editar Producto
+    {% else %}
+        Nuevo Producto
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 
@@ -12,8 +18,23 @@
             <div class="card shadow">
 
                 <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Registrar nuevo producto</h3>
+
+                    {% if editar %}
+
+                        <h3 class="mb-0">
+                            Editar producto
+                        </h3>
+
+                    {% else %}
+
+                        <h3 class="mb-0">
+                            Registrar nuevo producto
+                        </h3>
+
+                    {% endif %}
+
                 </div>
+
 
                 <div class="card-body">
 
@@ -21,7 +42,11 @@
 
                         {{ form.hidden_tag() }}
 
+
+                        <!-- NOMBRE -->
+
                         <div class="mb-3">
+
                             {{ form.nombre.label(class="form-label") }}
 
                             {{ form.nombre(
@@ -30,13 +55,20 @@
                             ) }}
 
                             {% for error in form.nombre.errors %}
+
                                 <div class="text-danger small mt-1">
                                     {{ error }}
                                 </div>
+
                             {% endfor %}
+
                         </div>
 
+
+                        <!-- DESCRIPCIÓN -->
+
                         <div class="mb-3">
+
                             {{ form.descripcion.label(class="form-label") }}
 
                             {{ form.descripcion(
@@ -46,13 +78,20 @@
                             ) }}
 
                             {% for error in form.descripcion.errors %}
+
                                 <div class="text-danger small mt-1">
                                     {{ error }}
                                 </div>
+
                             {% endfor %}
+
                         </div>
 
+
+                        <!-- CATEGORÍA -->
+
                         <div class="mb-3">
+
                             {{ form.categoria.label(class="form-label") }}
 
                             {{ form.categoria(
@@ -61,21 +100,40 @@
                             ) }}
 
                             {% for error in form.categoria.errors %}
+
                                 <div class="text-danger small mt-1">
                                     {{ error }}
                                 </div>
+
                             {% endfor %}
+
                         </div>
+
+
+                        <!-- BOTONES -->
 
                         <div class="d-flex gap-2">
 
-                            {{ form.submit(
-                                class="btn btn-primary"
-                            ) }}
+                            {% if editar %}
+
+                                {{ form.submit(
+                                    class="btn btn-warning"
+                                ) }}
+
+                            {% else %}
+
+                                {{ form.submit(
+                                    class="btn btn-primary"
+                                ) }}
+
+                            {% endif %}
+
 
                             <a href="{{ url_for('productos') }}"
                                class="btn btn-secondary">
+
                                 Cancelar
+
                             </a>
 
                         </div>
