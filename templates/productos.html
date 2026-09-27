@@ -24,11 +24,6 @@ Productos - Desarrollo Web
 
     </div>
 
-    {% if mensaje %}
-    <div class="alert alert-success text-center" role="alert">
-        {{ mensaje }}
-    </div>
-    {% endif %}
 
     <div class="table-responsive">
 
@@ -43,10 +38,13 @@ Productos - Desarrollo Web
                     <th>Categoría</th>
                     <th>Precio</th>
                     <th>Stock</th>
+                    <th>Proveedor</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
 
             </thead>
+
 
             <tbody>
 
@@ -55,7 +53,7 @@ Productos - Desarrollo Web
                 <tr>
 
                     <td>
-                        {{ producto["id"] }}
+                        {{ producto["id_producto"] }}
                     </td>
 
                     <td>
@@ -81,6 +79,14 @@ Productos - Desarrollo Web
                     </td>
 
                     <td>
+                        {% if producto["proveedor"] %}
+                            {{ producto["proveedor"] }}
+                        {% else %}
+                            Sin proveedor
+                        {% endif %}
+                    </td>
+
+                    <td>
 
                         {% if producto["stock"] > 0 %}
 
@@ -98,13 +104,49 @@ Productos - Desarrollo Web
 
                     </td>
 
+
+                    <td>
+
+                        <div class="d-flex gap-2">
+
+                            <a href="{{ url_for('editar_producto', id=producto['id_producto']) }}"
+                               class="btn btn-warning btn-sm">
+
+                                <i class="bi bi-pencil"></i>
+                                Editar
+
+                            </a>
+
+
+                            <form action="{{ url_for('eliminar_producto', id=producto['id_producto']) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('¿Está seguro de eliminar este producto?');">
+
+                                <input type="hidden"
+                                       name="csrf_token"
+                                       value="{{ csrf_token() }}">
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+
+                                    <i class="bi bi-trash"></i>
+                                    Eliminar
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
                 </tr>
 
                 {% else %}
 
                 <tr>
 
-                    <td colspan="7" class="text-center py-4">
+                    <td colspan="9" class="text-center py-4">
 
                         <div class="alert alert-info mb-0">
                             No existen productos registrados actualmente.
