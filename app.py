@@ -358,7 +358,25 @@ def obtener_proveedores():
     conn.close()
 
     return proveedores
+def obtener_clientes():
 
+    conn = obtener_conexion()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+            id_cliente,
+            nombre
+        FROM clientes
+        ORDER BY nombre
+    """)
+
+    clientes = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return clientes
 
 # ==================================================
 # CONFIGURAR PROVEEDORES EN EL FORMULARIO
@@ -372,7 +390,15 @@ def configurar_proveedores(form):
         (proveedor["id_proveedor"], proveedor["nombre"])
         for proveedor in proveedores
     ]
+    
+def configurar_clientes(form):
 
+    clientes = obtener_clientes()
+
+    form.cliente.choices = [
+        (cliente["id_cliente"], cliente["nombre"])
+        for cliente in clientes
+    ]
 
 # ==================================================
 # PRODUCTOS - LISTAR
@@ -700,11 +726,31 @@ def nuevo_proveedor():
 @login_required
 def facturacion():
 
+    conn = obtener_conexion()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+            f.id_factura,
+            f.numero_factura,
+            c.nombre AS cliente,
+            f.fecha,
+            f.total
+        FROM facturas f
+        INNER JOIN clientes c
+            ON f.id_cliente = c.id_cliente
+        ORDER BY f.id_factura DESC
+    """)
+
+    facturas = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     return render_template(
         "facturacion.html",
-        facturas=facturas_lista
+        facturas=facturas
     )
-
 
 @app.route("/facturacion/nueva", methods=["GET", "POST"])
 @login_required
@@ -712,24 +758,38 @@ def nueva_factura():
 
     form = FacturacionForm()
 
+    configurar_clientes(form)
+
     if form.validate_on_submit():
 
-        nueva = {
-            "numero": form.numero_factura.data,
-            "cliente": form.cliente.data,
-            "servicio": "Servicio general",
-            "fecha": "06/09/2026",
-            "total": form.total.data,
-            "estado": "Pendiente"
-        }
+        conn = obtener_conexion()
+        cursor = conn.cursor()
 
-        facturas_lista.append(nueva)
+        cursor.execute("""
+            INSERT INTO facturas (
+                numero_factura,
+                id_cliente,
+                fecha,
+                total
+            )
+            VALUES (%s, %s, CURDATE(), %s)
+        """, (
+            form.numero_factura.data,
+            form.cliente.data,
+            form.total.data
+        ))
 
-        return render_template(
-            "facturacion.html",
-            facturas=facturas_lista,
-            mensaje="Factura registrada correctamente."
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        flash(
+            "Factura registrada correctamente.",
+            "success"
         )
+
+        return redirect(url_for("facturacion"))
 
     return render_template(
         "formulario_facturacion.html",
