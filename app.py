@@ -40,6 +40,34 @@ login_manager.login_view = "login"
 login_manager.login_message = "Debe iniciar sesión para acceder a esta página."
 
 # ==================================================
+# CARGAR USUARIO PARA FLASK-LOGIN
+# ==================================================
+
+@login_manager.user_loader
+def load_user(user_id):
+
+    conexion = obtener_conexion()
+    cursor = conexion.cursor(dictionary=True)
+
+    cursor.execute(
+        "SELECT id, usuario FROM usuarios WHERE id = %s",
+        (user_id,)
+    )
+
+    fila = cursor.fetchone()
+
+    cursor.close()
+    conexion.close()
+
+    if fila:
+        return Usuario(
+            fila["id"],
+            fila["usuario"]
+        )
+
+    return None
+    
+# ==================================================
 # DATOS GENERALES DEL PROYECTO
 # ==================================================
 
