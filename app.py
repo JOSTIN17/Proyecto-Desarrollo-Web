@@ -1,5 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
+from flask_login import (
+    LoginManager,
+    login_user,
+    logout_user,
+    login_required,
+    current_user
+)
+
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from models import Usuario
+from forms.login_form import LoginForm
+from forms.usuario_form import UsuarioForm
 from forms.producto_form import ProductoForm
 from forms.cliente_form import ClienteForm
 from forms.proveedor_form import ProveedorForm
@@ -17,6 +30,14 @@ app = Flask(__name__)
 
 app.config["SECRET_KEY"] = "clave-secreta-proyecto-2026"
 
+# ==================================================
+# CONFIGURACIÓN DE FLASK-LOGIN
+# ==================================================
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+login_manager.login_message = "Debe iniciar sesión para acceder a esta página."
 
 # ==================================================
 # DATOS GENERALES DEL PROYECTO
