@@ -682,9 +682,27 @@ def nuevo_cliente():
 @login_required
 def proveedores():
 
+    conn = obtener_conexion()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+            id_proveedor,
+            nombre,
+            telefono,
+            correo
+        FROM proveedores
+        ORDER BY id_proveedor DESC
+    """)
+
+    proveedores = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     return render_template(
         "proveedores.html",
-        proveedores=proveedores_lista
+        proveedores=proveedores
     )
 
 
@@ -696,27 +714,38 @@ def nuevo_proveedor():
 
     if form.validate_on_submit():
 
-        nuevo = {
-            "id": str(len(proveedores_lista) + 1).zfill(3),
-            "empresa": form.empresa.data,
-            "servicio": "Servicio general",
-            "contacto": form.correo.data,
-            "estado": "Activo"
-        }
+        conn = obtener_conexion()
+        cursor = conn.cursor()
 
-        proveedores_lista.append(nuevo)
+        cursor.execute("""
+            INSERT INTO proveedores (
+                nombre,
+                telefono,
+                correo
+            )
+            VALUES (%s, %s, %s)
+        """, (
+            form.nombre.data,
+            form.telefono.data,
+            form.correo.data
+        ))
 
-        return render_template(
-            "proveedores.html",
-            proveedores=proveedores_lista,
-            mensaje="Proveedor registrado correctamente."
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        flash(
+            "Proveedor registrado correctamente.",
+            "success"
         )
+
+        return redirect(url_for("proveedores"))
 
     return render_template(
         "formulario_proveedor.html",
         form=form
     )
-
 
 # ==================================================
 # FACTURACIÓN
