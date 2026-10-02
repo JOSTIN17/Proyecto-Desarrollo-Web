@@ -8,7 +8,9 @@ Facturación - Desarrollo Web
 
 <div class="container my-5">
 
-    <div class="text-center mb-5">
+```
+<div class="text-center mb-5">
+
     <h1>Facturación</h1>
 
     <p class="lead">
@@ -17,88 +19,89 @@ Facturación - Desarrollo Web
 
     <a href="{{ url_for('nueva_factura') }}"
        class="btn btn-primary mt-3">
+
         <i class="bi bi-receipt"></i>
         Nueva factura
+
     </a>
+
 </div>
 
-    <div class="table-responsive">
 
-        <table class="table table-striped table-hover shadow">
+<div class="table-responsive">
 
-            <thead class="table-primary">
-                <tr>
-                    <th>N.º Factura</th>
-                    <th>Cliente</th>
-                    <th>Servicio</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
+    <table class="table table-striped table-hover shadow">
 
-            <tbody>
+        <thead class="table-primary">
 
-                {% for factura in facturas %}
+            <tr>
+                <th>N.º Factura</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+            </tr>
 
-                <tr>
+        </thead>
 
-                    <td>
-                        {{ factura.numero }}
-                    </td>
 
-                    <td>
-                        {{ factura.cliente }}
-                    </td>
+        <tbody>
 
-                    <td>
-                        {{ factura.servicio }}
-                    </td>
+            {% for factura in facturas %}
 
-                    <td>
-                        {{ factura.fecha }}
-                    </td>
+            <tr>
 
-                    <td>
-                        ${{ "%.2f"|format(factura.total) }}
-                    </td>
+                <td>
+                    {{ factura["numero_factura"] }}
+                </td>
 
-                    <td>
+                <td>
+                    {{ factura["cliente"] }}
+                </td>
 
-                        {% if factura.estado == "Pagada" %}
+                <td>
+                    {{ factura["fecha"] }}
+                </td>
 
-                            <span class="badge bg-success">
-                                {{ factura.estado }}
-                            </span>
+                <td>
+                    ${{ "%.2f"|format(factura["total"]) }}
+                </td>
 
-                        {% else %}
+            </tr>
 
-                            <span class="badge bg-warning text-dark">
-                                {{ factura.estado }}
-                            </span>
+            {% else %}
 
-                        {% endif %}
+            <tr>
 
-                    </td>
+                <td colspan="4" class="text-center py-4">
 
-                </tr>
+                    <div class="alert alert-info mb-0">
 
-                {% endfor %}
+                        No existen facturas registradas actualmente.
 
-            </tbody>
+                    </div>
 
-        </table>
+                </td>
 
-    </div>
+            </tr>
 
-    <div class="alert alert-info mt-4">
+            {% endfor %}
 
-        <strong>Información:</strong>
+        </tbody>
 
-        Los datos presentados son demostrativos y no están conectados
-        a una base de datos en esta etapa del proyecto.
+    </table>
 
-    </div>
+</div>
+
+
+<div class="alert alert-success mt-4">
+
+    <strong>Información:</strong>
+
+    Las facturas mostradas se consultan directamente
+    desde la base de datos MySQL.
+
+</div>
+```
 
 </div>
 
