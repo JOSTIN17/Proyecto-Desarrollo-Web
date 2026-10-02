@@ -186,7 +186,70 @@ def index():
         nombre_proyecto=nombre_proyecto,
         informacion=informacion_proyecto
     )
+# ==================================================
+# REGISTRO DE USUARIOS
+# ==================================================
 
+@app.route("/registro", methods=["GET", "POST"])
+def registro():
+
+    form = UsuarioForm()
+
+    if form.validate_on_submit():
+
+        conexion = obtener_conexion()
+        cursor = conexion.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT id FROM usuarios WHERE usuario = %s",
+            (form.usuario.data,)
+        )
+
+        usuario_existente = cursor.fetchone()
+
+        if usuario_existente:
+            flash("El usuario ya existe.", "danger")
+
+            cursor.close()
+            conexion.close()
+
+            return render_template(
+                "registro.html",
+                form=form
+            )
+
+        password_hash = generate_password_hash(
+            form.password.data
+        )
+
+        cursor.execute(
+            """
+            INSERT INTO usuarios (usuario, password)
+            VALUES (%s, %s)
+            """,
+            (
+                form.usuario.data,
+                password_hash
+            )
+        )
+
+        conexion.commit()
+
+        cursor.close()
+        conexion.close()
+
+        flash(
+            "Usuario registrado correctamente.",
+            "success"
+        )
+
+        return redirect(url_for("login"))
+
+    return render_template(
+        "registro.html",
+        form=form
+    )
+    
 
 # ==================================================
 # OBTENER PROVEEDORES DESDE MYSQL
