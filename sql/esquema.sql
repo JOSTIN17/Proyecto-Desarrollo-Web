@@ -2,6 +2,16 @@ CREATE DATABASE IF NOT EXISTS ferreteria;
 
 USE ferreteria;
 
+-- ==========================================
+-- TABLA: usuarios
+-- ==========================================
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
 
 -- ==========================================
 -- TABLA: proveedores
