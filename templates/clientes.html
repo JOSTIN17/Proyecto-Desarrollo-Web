@@ -8,7 +8,9 @@ Clientes - Desarrollo Web
 
 <div class="container my-5">
 
-    <div class="text-center mb-5">
+```
+<div class="text-center mb-5">
+
     <h1>Clientes</h1>
 
     <p class="lead">
@@ -17,69 +19,81 @@ Clientes - Desarrollo Web
 
     <a href="{{ url_for('nuevo_cliente') }}"
        class="btn btn-primary mt-3">
+
         <i class="bi bi-person-plus"></i>
         Nuevo cliente
+
     </a>
+
 </div>
 
-    <div class="table-responsive">
 
-        <table class="table table-striped table-hover shadow">
+<div class="table-responsive">
 
-            <thead class="table-primary">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
+    <table class="table table-striped table-hover shadow">
 
-            <tbody>
+        <thead class="table-primary">
 
-                {% for cliente in clientes %}
+            <tr>
 
-                <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
 
-                    <td>
-                        {{ cliente.id }}
-                    </td>
+            </tr>
 
-                    <td>
-                        {{ cliente.nombre }}
-                    </td>
+        </thead>
 
-                    <td>
-                        {{ cliente.correo }}
-                    </td>
 
-                    <td>
+        <tbody>
 
-                        {% if cliente.estado == "Activo" %}
+            {% for cliente in clientes %}
 
-                            <span class="badge bg-success">
-                                {{ cliente.estado }}
-                            </span>
+            <tr>
 
-                        {% else %}
+                <td>
+                    {{ cliente["id_cliente"] }}
+                </td>
 
-                            <span class="badge bg-secondary">
-                                {{ cliente.estado }}
-                            </span>
+                <td>
+                    {{ cliente["nombre"] }}
+                </td>
 
-                        {% endif %}
+                <td>
+                    {{ cliente["telefono"] }}
+                </td>
 
-                    </td>
+                <td>
+                    {{ cliente["correo"] }}
+                </td>
 
-                </tr>
+            </tr>
 
-                {% endfor %}
+            {% else %}
 
-            </tbody>
+            <tr>
 
-        </table>
+                <td colspan="4" class="text-center py-4">
 
-    </div>
+                    <div class="alert alert-info mb-0">
+
+                        No existen clientes registrados actualmente.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+```
 
 </div>
 
