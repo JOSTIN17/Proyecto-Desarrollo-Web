@@ -1,3 +1,5 @@
 Flask
 Flask-WTF
 mysql-connector-python
+Flask-Login
+Werkzeug
