@@ -61,15 +61,16 @@ CREATE TABLE IF NOT EXISTS clientes (
 -- TABLA: facturas
 -- ==========================================
 
-CREATE TABLE IF NOT EXISTS facturas (
-    id_factura INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT NOT NULL,
-    fecha DATE NOT NULL,
-    total DECIMAL(10,2) NOT NULL,
-
-    CONSTRAINT fk_factura_cliente
-        FOREIGN KEY (id_cliente)
-        REFERENCES clientes(id_cliente)
+CREATE TABLE IF NOT EXISTS facturas ( 
+    id_factura INT AUTO_INCREMENT PRIMARY KEY, 
+    numero_factura VARCHAR(20) UNIQUE NOT NULL,
+    id_cliente INT NOT NULL, 
+    fecha DATE NOT NULL, 
+    total DECIMAL(10,2) NOT NULL, 
+ 
+    CONSTRAINT fk_factura_cliente 
+        FOREIGN KEY (id_cliente) 
+        REFERENCES clientes(id_cliente) 
 );
 
 -- ==========================================
