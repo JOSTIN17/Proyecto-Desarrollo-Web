@@ -419,6 +419,7 @@ def productos():
 # ==================================================
 
 @app.route("/productos/nuevo", methods=["GET", "POST"])
+@login_required
 def nuevo_producto():
 
     form = ProductoForm()
@@ -468,6 +469,7 @@ def nuevo_producto():
 # ==================================================
 
 @app.route("/productos/editar/<int:id>", methods=["GET", "POST"])
+@login_required
 def editar_producto(id):
 
     conn = obtener_conexion()
@@ -553,6 +555,7 @@ def editar_producto(id):
 # ==================================================
 
 @app.route("/productos/eliminar/<int:id>", methods=["POST"])
+@login_required
 def eliminar_producto(id):
 
     conn = obtener_conexion()
@@ -586,6 +589,7 @@ def clientes():
 
 
 @app.route("/clientes/nuevo", methods=["GET", "POST"])
+@login_required
 def nuevo_cliente():
 
     form = ClienteForm()
@@ -628,6 +632,7 @@ def proveedores():
 
 
 @app.route("/proveedores/nuevo", methods=["GET", "POST"])
+@login_required
 def nuevo_proveedor():
 
     form = ProveedorForm()
@@ -671,6 +676,7 @@ def facturacion():
 
 
 @app.route("/facturacion/nueva", methods=["GET", "POST"])
+@login_required
 def nueva_factura():
 
     form = FacturacionForm()
