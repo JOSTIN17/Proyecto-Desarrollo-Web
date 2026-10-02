@@ -250,7 +250,91 @@ def registro():
         form=form
     )
     
+# ==================================================
+# INICIO DE SESIÓN
+# ==================================================
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if current_user.is_authenticated:
+        return redirect(url_for("dashboard"))
+
+    form = LoginForm()
+
+    if form.validate_on_submit():
+
+        conexion = obtener_conexion()
+        cursor = conexion.cursor(dictionary=True)
+
+        cursor.execute(
+            """
+            SELECT id, usuario, password
+            FROM usuarios
+            WHERE usuario = %s
+            """,
+            (form.usuario.data,)
+        )
+
+        usuario_db = cursor.fetchone()
+
+        cursor.close()
+        conexion.close()
+
+        if usuario_db and check_password_hash(
+            usuario_db["password"],
+            form.password.data
+        ):
+
+            usuario = Usuario(
+                usuario_db["id"],
+                usuario_db["usuario"]
+            )
+
+            login_user(usuario)
+
+            return redirect(url_for("dashboard"))
+
+        flash(
+            "Usuario o contraseña incorrectos.",
+            "danger"
+        )
+
+    return render_template(
+        "login.html",
+        form=form
+    )
+
+# ==================================================
+# CERRAR SESIÓN
+# ==================================================
+
+@app.route("/logout")
+@login_required
+def logout():
+
+    logout_user()
+
+    flash(
+        "Sesión cerrada correctamente.",
+        "success"
+    )
+
+    return redirect(url_for("login"))
+
+# ==================================================
+# DASHBOARD
+# ==================================================
+
+@app.route("/dashboard")
+@login_required
+def dashboard():
+
+    return render_template(
+        "dashboard.html",
+        usuario=current_user
+    )
+    
 # ==================================================
 # OBTENER PROVEEDORES DESDE MYSQL
 # ==================================================
@@ -296,6 +380,7 @@ def configurar_proveedores(form):
 # ==================================================
 
 @app.route("/productos")
+@login_required
 def productos():
 
     conn = obtener_conexion()
@@ -491,6 +576,7 @@ def eliminar_producto(id):
 # ==================================================
 
 @app.route("/clientes")
+@login_required
 def clientes():
 
     return render_template(
@@ -532,6 +618,7 @@ def nuevo_cliente():
 # ==================================================
 
 @app.route("/proveedores")
+@login_required
 def proveedores():
 
     return render_template(
@@ -574,6 +661,7 @@ def nuevo_proveedor():
 # ==================================================
 
 @app.route("/facturacion")
+@login_required
 def facturacion():
 
     return render_template(
