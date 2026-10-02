@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Bienvenido al Dashboard
+        </h1>
+
+        <p class="lead">
+            Has iniciado sesión correctamente.
+        </p>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body text-center">
+
+            <h3 class="card-title">
+                Hola, {{ usuario.usuario }} 👋
+            </h3>
+
+            <p class="card-text mt-3">
+                Tu sesión está activa y puedes acceder
+                a las funciones del sistema.
+            </p>
+
+            <a href="{{ url_for('logout') }}"
+               class="btn btn-danger">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
