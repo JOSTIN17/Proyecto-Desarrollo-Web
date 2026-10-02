@@ -1,12 +1,12 @@
-import mysql.connector
+import os
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 def obtener_conexion():
-    conexion = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="ferreteria"
+
+    conexion = psycopg2.connect(
+        os.environ.get("DATABASE_URL")
     )
 
     return conexion
