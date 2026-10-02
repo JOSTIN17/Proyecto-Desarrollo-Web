@@ -1,5 +1,6 @@
 Flask
 Flask-WTF
-mysql-connector-python
+psycopg2-binary
 Flask-Login
 Werkzeug
+gunicorn
