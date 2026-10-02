@@ -582,11 +582,30 @@ def eliminar_producto(id):
 @login_required
 def clientes():
 
+    conn = obtener_conexion()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT
+            id_cliente,
+            nombre,
+            cedula,
+            telefono,
+            correo
+        FROM clientes
+        ORDER BY id_cliente DESC
+    """)
+
+    clientes = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
     return render_template(
         "clientes.html",
-        clientes=clientes_lista
+        clientes=clientes
     )
-
+    
 
 @app.route("/clientes/nuevo", methods=["GET", "POST"])
 @login_required
@@ -596,26 +615,38 @@ def nuevo_cliente():
 
     if form.validate_on_submit():
 
-        nuevo = {
-            "id": str(len(clientes_lista) + 1).zfill(3),
-            "nombre": form.nombre.data,
-            "correo": form.correo.data,
-            "estado": "Activo"
-        }
+        conn = obtener_conexion()
+        cursor = conn.cursor()
 
-        clientes_lista.append(nuevo)
+        cursor.execute("""
+            INSERT INTO clientes (
+                nombre,
+                telefono,
+                correo
+            )
+            VALUES (%s, %s, %s)
+        """, (
+            form.nombre.data,
+            form.telefono.data,
+            form.correo.data
+        ))
 
-        return render_template(
-            "clientes.html",
-            clientes=clientes_lista,
-            mensaje="Cliente registrado correctamente."
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        flash(
+            "Cliente registrado correctamente.",
+            "success"
         )
+
+        return redirect(url_for("clientes"))
 
     return render_template(
         "formulario_cliente.html",
         form=form
     )
-
 
 # ==================================================
 # PROVEEDORES
