@@ -603,7 +603,114 @@ def nuevo_cliente():
         "formulario_cliente.html",
         form=form
     )
+    
+# ==================================================
+# CLIENTES - MODIFICAR
+# UPDATE
+# ==================================================
 
+@app.route("/clientes/editar/<int:id>", methods=["GET", "POST"])
+@login_required
+def editar_cliente(id):
+
+    conn = obtener_conexion()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    cursor.execute("""
+        SELECT
+            id_cliente,
+            nombre,
+            cedula,
+            telefono,
+            correo
+        FROM clientes
+        WHERE id_cliente = %s
+    """, (id,))
+
+    cliente = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if cliente is None:
+        return redirect(url_for("clientes"))
+
+    form = ClienteForm()
+
+    if request.method == "GET":
+
+        form.nombre.data = cliente["nombre"]
+        form.telefono.data = cliente["telefono"]
+        form.correo.data = cliente["correo"]
+
+    if form.validate_on_submit():
+
+        conn = obtener_conexion()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            UPDATE clientes
+            SET
+                nombre = %s,
+                telefono = %s,
+                correo = %s
+            WHERE id_cliente = %s
+        """, (
+            form.nombre.data,
+            form.telefono.data,
+            form.correo.data,
+            id
+        ))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        flash(
+            "Cliente actualizado correctamente.",
+            "success"
+        )
+
+        return redirect(url_for("clientes"))
+
+    return render_template(
+        "formulario_cliente.html",
+        form=form,
+        editar=True,
+        cliente=cliente
+    )
+
+
+# ==================================================
+# CLIENTES - ELIMINAR
+# DELETE
+# ==================================================
+
+@app.route("/clientes/eliminar/<int:id>", methods=["POST"])
+@login_required
+def eliminar_cliente(id):
+
+    conn = obtener_conexion()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM clientes
+        WHERE id_cliente = %s
+    """, (id,))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    flash(
+        "Cliente eliminado correctamente.",
+        "success"
+    )
+
+    return redirect(url_for("clientes"))
+    
 
 # ==================================================
 # PROVEEDORES
