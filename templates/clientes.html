@@ -8,7 +8,7 @@ Clientes - Desarrollo Web
 
 <div class="container my-5">
 
-```
+
 <div class="text-center mb-5">
 
     <h1>Clientes</h1>
@@ -40,6 +40,7 @@ Clientes - Desarrollo Web
                 <th>Nombre</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
+                <th>Acciones</th>
 
             </tr>
 
@@ -68,13 +69,41 @@ Clientes - Desarrollo Web
                     {{ cliente["correo"] }}
                 </td>
 
+                <td>
+
+                    <a href="{{ url_for('editar_cliente', id=cliente['id_cliente']) }}"
+                       class="btn btn-warning btn-sm">
+
+                        <i class="bi bi-pencil"></i>
+                        Editar
+
+                    </a>
+
+
+                    <form action="{{ url_for('eliminar_cliente', id=cliente['id_cliente']) }}"
+                          method="POST"
+                          style="display:inline;"
+                          onsubmit="return confirm('¿Está seguro de eliminar este cliente?');">
+
+                        <button type="submit"
+                                class="btn btn-danger btn-sm">
+
+                            <i class="bi bi-trash"></i>
+                            Eliminar
+
+                        </button>
+
+                    </form>
+
+                </td>
+
             </tr>
 
             {% else %}
 
             <tr>
 
-                <td colspan="4" class="text-center py-4">
+                <td colspan="5" class="text-center py-4">
 
                     <div class="alert alert-info mb-0">
 
@@ -93,7 +122,7 @@ Clientes - Desarrollo Web
     </table>
 
 </div>
-```
+
 
 </div>
 
