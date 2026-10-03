@@ -1,0 +1,44 @@
+name: Inicializar base de datos
+
+on:
+  workflow_dispatch:
+
+jobs:
+  init-db:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar PostgreSQL
+        run: pip install psycopg2-binary
+
+      - name: Ejecutar esquema SQL
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          python - <<'PY'
+          import os
+          import psycopg2
+
+          with open("esquema.sql", "r", encoding="utf-8") as f:
+              sql = f.read()
+
+          conn = psycopg2.connect(os.environ["DATABASE_URL"])
+
+          try:
+              with conn:
+                  with conn.cursor() as cursor:
+                      cursor.execute(sql)
+
+              print("Esquema ejecutado correctamente.")
+
+          finally:
+              conn.close()
+          PY
