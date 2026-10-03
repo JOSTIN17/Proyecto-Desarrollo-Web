@@ -4,11 +4,16 @@ from wtforms.validators import DataRequired, Length, Email
 
 
 class ProveedorForm(FlaskForm):
+
     nombre = StringField(
         "Nombre del proveedor",
         validators=[
             DataRequired(message="El nombre es obligatorio."),
-            Length(min=3, max=100, message="El nombre debe tener entre 3 y 100 caracteres.")
+            Length(
+                min=3,
+                max=100,
+                message="El nombre debe tener entre 3 y 100 caracteres."
+            )
         ]
     )
 
@@ -24,15 +29,11 @@ class ProveedorForm(FlaskForm):
         "Teléfono",
         validators=[
             DataRequired(message="El teléfono es obligatorio."),
-            Length(min=7, max=15, message="El teléfono debe tener entre 7 y 15 caracteres.")
-        ]
-    )
-
-        telefono = StringField(
-        "Teléfono",
-        validators=[
-            DataRequired(message="El teléfono es obligatorio."),
-            Length(min=7, max=15, message="El teléfono debe tener entre 7 y 15 caracteres.")
+            Length(
+                min=7,
+                max=15,
+                message="El teléfono debe tener entre 7 y 15 caracteres."
+            )
         ]
     )
 
