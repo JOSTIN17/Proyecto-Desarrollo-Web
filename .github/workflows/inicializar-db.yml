@@ -27,7 +27,7 @@ jobs:
           import os
           import psycopg2
 
-          with open("esquema.sql", "r", encoding="utf-8") as f:
+          with open("sql/esquema.sql", "r", encoding="utf-8") as f:
               sql = f.read()
 
           conn = psycopg2.connect(os.environ["DATABASE_URL"])
