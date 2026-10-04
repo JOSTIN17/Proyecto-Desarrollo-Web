@@ -784,7 +784,113 @@ def nuevo_proveedor():
         "formulario_proveedor.html",
         form=form
     )
+    
+# ==================================================
+# PROVEEDORES - MODIFICAR
+# UPDATE
+# ==================================================
 
+@app.route("/proveedores/editar/<int:id>", methods=["GET", "POST"])
+@login_required
+def editar_proveedor(id):
+
+    conn = obtener_conexion()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    cursor.execute("""
+        SELECT
+            id_proveedor,
+            nombre,
+            telefono,
+            correo
+        FROM proveedores
+        WHERE id_proveedor = %s
+    """, (id,))
+
+    proveedor = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if proveedor is None:
+        return redirect(url_for("proveedores"))
+
+    form = ProveedorForm()
+
+    if request.method == "GET":
+
+        form.nombre.data = proveedor["nombre"]
+        form.telefono.data = proveedor["telefono"]
+        form.correo.data = proveedor["correo"]
+
+    if form.validate_on_submit():
+
+        conn = obtener_conexion()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            UPDATE proveedores
+            SET
+                nombre = %s,
+                telefono = %s,
+                correo = %s
+            WHERE id_proveedor = %s
+        """, (
+            form.nombre.data,
+            form.telefono.data,
+            form.correo.data,
+            id
+        ))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        flash(
+            "Proveedor actualizado correctamente.",
+            "success"
+        )
+
+        return redirect(url_for("proveedores"))
+
+    return render_template(
+        "formulario_proveedor.html",
+        form=form,
+        editar=True,
+        proveedor=proveedor
+    )
+
+
+# ==================================================
+# PROVEEDORES - ELIMINAR
+# DELETE
+# ==================================================
+
+@app.route("/proveedores/eliminar/<int:id>", methods=["POST"])
+@login_required
+def eliminar_proveedor(id):
+
+    conn = obtener_conexion()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM proveedores
+        WHERE id_proveedor = %s
+    """, (id,))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    flash(
+        "Proveedor eliminado correctamente.",
+        "success"
+    )
+
+    return redirect(url_for("proveedores"))
+    
 
 # ==================================================
 # FACTURACIÓN
