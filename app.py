@@ -694,6 +694,29 @@ def eliminar_cliente(id):
     conn = obtener_conexion()
     cursor = conn.cursor()
 
+    # Verificar si el cliente tiene facturas relacionadas
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM facturas
+        WHERE id_cliente = %s
+    """, (id,))
+
+    cantidad_facturas = cursor.fetchone()[0]
+
+    # Si tiene facturas, no permitir eliminar
+    if cantidad_facturas > 0:
+
+        cursor.close()
+        conn.close()
+
+        flash(
+            "No se puede eliminar este cliente porque tiene facturas registradas.",
+            "warning"
+        )
+
+        return redirect(url_for("clientes"))
+
+    # Si no tiene facturas, eliminar normalmente
     cursor.execute("""
         DELETE FROM clientes
         WHERE id_cliente = %s
